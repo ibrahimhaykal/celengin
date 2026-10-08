@@ -2,7 +2,13 @@
 
 Celengin adalah aplikasi keuangan pribadi untuk mencatat pemasukan, pengeluaran, dan transfer antar dompet. Saldo, anggaran bulanan, jadwal pembayaran, dan target tabungan bisa dipantau dari satu dashboard.
 
-Data disimpan lokal di SQLite. Aplikasi tidak membutuhkan akun Celengin. Sinkronisasi Gmail dan pembaruan harga aset membutuhkan koneksi internet.
+## Privacy first
+
+Data keuangan disimpan di database SQLite lokal pada perangkat pengguna. Celengin tidak mengunggah database ke server milik pengembang dan tidak membutuhkan akun Celengin. Pengguna mengelola data, konfigurasi akun, serta backup sendiri.
+
+Dashboard menggunakan server lokal di perangkat, tanpa server pusat untuk menyimpan data keuangan. Pencatatan manual dapat digunakan tanpa koneksi internet.
+
+Sinkronisasi Gmail dan pembaruan harga aset menghubungi layanan eksternal saat digunakan: Gmail, CoinGecko, Indodax, dan Pasardana. Email diproses di perangkat pengguna; permintaan harga aset tidak mengirim saldo atau jumlah kepemilikan. Konfigurasi Gmail disimpan dalam file `.env` lokal, sehingga file ini dan backup database perlu disimpan secara pribadi.
 
 ## Fitur
 
