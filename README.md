@@ -1,4 +1,4 @@
-# Celengin (Fintrack)
+# Celengin
 
 Celengin adalah aplikasi keuangan pribadi untuk mencatat pemasukan, pengeluaran, dan transfer antar dompet. Saldo, anggaran bulanan, jadwal pembayaran, dan target tabungan bisa dipantau dari satu dashboard.
 
@@ -38,7 +38,7 @@ Jika koneksi atau sumber harga gagal, saldo mempertahankan nilai terakhir. Saham
 
 ## Install di Windows
 
-Unduh `Celengin-Setup-1.0.0-x64.exe` dari [Releases](https://github.com/ibrahimhaykal/fin-track/releases), jika sudah tersedia. Jalankan installer, lalu buka Celengin dari shortcut. Versi installer tidak memerlukan Node.js.
+Unduh `Celengin-Setup-1.0.0-x64.exe` dari [Releases](https://github.com/ibrahimhaykal/celengin/releases), jika sudah tersedia. Jalankan installer, lalu buka Celengin dari shortcut. Versi installer tidak memerlukan Node.js.
 
 Instalasi baru dimulai kosong, tanpa contoh saldo atau data pribadi.
 
@@ -108,8 +108,8 @@ Stack: React, Vite, Tailwind CSS, Express, SQLite (`better-sqlite3`), dan Electr
 Gunakan Node.js 22.12+ atau 24+.
 
 ```sh
-git clone https://github.com/ibrahimhaykal/fin-track.git
-cd fin-track
+git clone https://github.com/ibrahimhaykal/celengin.git
+cd celengin
 npm ci
 npm run app
 ```
