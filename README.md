@@ -14,6 +14,22 @@ Data disimpan lokal di SQLite. Aplikasi tidak membutuhkan akun Celengin. Sinkron
 - Dompet aset dengan pembaruan harga, tema terang/gelap, dan opsi menyembunyikan saldo.
 - Backup database harian otomatis, dengan 14 snapshot terbaru disimpan.
 
+## Aset yang didukung
+
+| Jenis | Pilihan | Cara menghitung saldo |
+| --- | --- | --- |
+| Dompet manual | Uang tunai, rekening bank, e-wallet, deposito, atau aset lain yang dicatat sendiri | Saldo Rupiah diisi pengguna dan berubah mengikuti transaksi |
+| Crypto | Bitcoin (BTC), Ethereum (ETH), Solana (SOL), BNB (BNB), XRP (XRP), Dogecoin (DOGE), Tether (USDT) | Jumlah koin × harga dalam Rupiah |
+| Reksa dana | Pasar Uang (RDPU), Pendapatan Tetap, Saham, Campuran, dan Terproteksi | Jumlah unit × NAB per unit dari produk yang dipilih |
+
+Harga crypto diambil dari CoinGecko, dengan Indodax sebagai sumber cadangan. Aplikasi mencoba memperbarui harga setiap 5 menit. Perubahan harga 24 jam ditampilkan bila tersedia dari sumber data.
+
+Produk reksa dana dicari berdasarkan nama melalui data Pasardana. Daftarnya mengikuti produk yang dikembalikan sumber tersebut dan memiliki NAB positif; nama produk tidak ditanam sebagai daftar tetap di aplikasi. Informasi produk mencakup manajer investasi, jenis, status syariah, NAB, dan tanggal NAB. Aplikasi mengecek pembaruan setiap 5 menit, tetapi NAB mengikuti tanggal data dari Pasardana, bukan harga pasar setiap saat.
+
+Untuk mengaktifkan perhitungan harga pada dompet, buka **Atur harga live**, pilih **Crypto** atau **Reksa dana**, pilih aset/produk, lalu masukkan jumlah koin/unit atau nilai Rupiah. Nilai Rupiah dikonversi menjadi jumlah unit memakai harga saat pengaturan disimpan; pembaruan berikutnya mengikuti jumlah unit tersebut.
+
+Jika koneksi atau sumber harga gagal, saldo mempertahankan nilai terakhir. Saham individual, ETF, emas, dan kurs valuta asing belum memiliki sumber harga otomatis; nilainya bisa dicatat lewat dompet manual. Celengin mencatat kepemilikan dan nilainya, tanpa menjalankan pembelian atau penjualan aset.
+
 ## Install di Windows
 
 Unduh `Celengin-Setup-1.0.0-x64.exe` dari [Releases](https://github.com/ibrahimhaykal/fin-track/releases), jika sudah tersedia. Jalankan installer, lalu buka Celengin dari shortcut. Versi installer tidak memerlukan Node.js.
