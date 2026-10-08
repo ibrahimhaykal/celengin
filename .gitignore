@@ -8,3 +8,5 @@ electron/shortcut-*.ico
 *.db-*
 backups/
 AI-PROMPT-SPEC.md
+
+release/

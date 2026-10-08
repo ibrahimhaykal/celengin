@@ -2018,7 +2018,7 @@ app.put('/api/wallets/:id/crypto', async (req, res) => {
 
 // Built dashboard (npm run build), served from the same origin as the API. Used by the desktop app;
 // in development Vite serves the UI instead and proxies /api here.
-const DIST = path.resolve('dist');
+const DIST = path.resolve(process.env.APP_DIST || 'dist');
 if (fs.existsSync(path.join(DIST, 'index.html'))) {
   app.use(express.static(DIST));
   app.get(/^(?!\/api\/).*/, (req, res) => res.sendFile(path.join(DIST, 'index.html')));

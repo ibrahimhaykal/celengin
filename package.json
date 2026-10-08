@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "app": "vite build && node electron/launch.cjs",
     "app:icon": "node electron/make-icon.cjs",
-    "app:shortcut": "node electron/make-shortcut.cjs"
+    "app:shortcut": "node electron/make-shortcut.cjs",
+    "release:win": "npm run build && electron-builder --win nsis --x64 --publish never"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -33,6 +34,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "concurrently": "^10.0.5",
     "electron": "^44.4.5",
+    "electron-builder": "^26.15.3",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.1"
   },
@@ -40,5 +42,45 @@
     "better-sqlite3@13.0.3": true,
     "electron@44.4.5": true
   },
-  "main": "electron/main.js"
+  "main": "electron/main.js",
+  "description": "Aplikasi keuangan pribadi dengan penyimpanan lokal.",
+  "build": {
+    "appId": "com.celengin.desktop",
+    "productName": "Celengin",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/main.js",
+      "electron/icon.png",
+      "electron/tray.png",
+      "server.js",
+      "package.json",
+      "!**/*.db",
+      "!**/*.db-*",
+      "!**/.env*",
+      "!backups/**",
+      "!AI-PROMPT-SPEC.md"
+    ],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*"
+    ],
+    "win": {
+      "icon": "electron/icon.ico",
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "Celengin-Setup-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "createDesktopShortcut": true,
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": false
+    },
+    "npmRebuild": false
+  }
 }

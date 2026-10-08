@@ -27,8 +27,11 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 async function start() {
-  // server.js resolves finance.db, .env and dist/ relative to the working directory.
-  process.chdir(ROOT);
+  // Packaged apps keep writable data outside the installation directory.
+  const dataDir = app.isPackaged ? app.getPath('userData') : ROOT;
+  process.chdir(dataDir);
+  process.env.DOTENV_CONFIG_PATH = path.join(dataDir, '.env');
+  process.env.APP_DIST = path.join(ROOT, 'dist');
   process.env.PORT = PORT;
   process.env.HOST = '127.0.0.1';
   await import('../server.js');
@@ -114,6 +117,7 @@ function createTray() {
     tray.setContextMenu(
       Menu.buildFromTemplate([
         { label: 'Buka Celengin', click: showWindow },
+        { label: 'Buka folder data', click: () => shell.openPath(app.isPackaged ? app.getPath('userData') : ROOT) },
         {
           label: 'Refresh',
           click: () => {
