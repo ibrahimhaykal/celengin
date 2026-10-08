@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  /* Geist when online, system UI font when offline. */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Wallet card being picked up for drag & drop: grows and tilts a little, then stays there. */
+  --animate-card-lift: card-lift 180ms cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+  @keyframes card-lift {
+    from {
+      transform: scale(1) rotate(0deg);
+    }
+    to {
+      transform: scale(1.045) rotate(1.6deg);
+    }
+  }
+}
+
+/* ---------- Theme: light / dark ----------
+   <html data-theme="light|dark"> is set before first paint (inline script in index.html) from the user's
+   choice in the header pill: Sistem (follows Windows), Terang or Gelap.
+   Components are written once against the zinc scale as a *dark* UI. For light mode the scale is flipped
+   (950 page -> near white, 100 text -> near black), white overlays become black overlays, and accent
+   tints move to deeper steps so they stay readable on white. */
+
+:root {
+  color-scheme: dark;
+  /* Chart series, validated for CVD + contrast on the dark surface. Assigned in fixed order. */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+
+:root[data-theme='light'] {
+    color-scheme: light;
+
+    --color-zinc-50: oklch(14.1% 0.005 285.823);
+    --color-zinc-100: oklch(21% 0.006 285.885);
+    --color-zinc-200: oklch(27.4% 0.006 286.033);
+    --color-zinc-300: oklch(37% 0.013 285.805);
+    --color-zinc-400: oklch(44.2% 0.017 285.786);
+    --color-zinc-500: oklch(55.2% 0.016 285.938);
+    --color-zinc-600: oklch(70.5% 0.015 286.067);
+    --color-zinc-700: oklch(87.1% 0.006 286.286);
+    --color-zinc-800: oklch(92% 0.004 286.32);
+    --color-zinc-900: #ffffff; /* cards */
+    --color-zinc-950: oklch(96.7% 0.001 286.375); /* page */
+    --color-white: #000000; /* white/[x] overlays and hover:text-white read as dark on light */
+
+    --color-emerald-300: oklch(50.8% 0.118 165.612);
+    --color-emerald-400: oklch(59.6% 0.145 163.225);
+    --color-rose-300: oklch(51.4% 0.222 16.935);
+    --color-rose-400: oklch(58.6% 0.253 17.585);
+    --color-sky-300: oklch(50% 0.134 242.749);
+    --color-sky-400: oklch(58.8% 0.158 241.966);
+    --color-amber-300: oklch(55.5% 0.163 48.998);
+    --color-amber-400: oklch(66.6% 0.179 58.318);
+
+    /* Light steps of the same eight hues, validated on white (labels carry identity for the paler three). */
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --series-3: #1baf7a;
+    --series-4: #eda100;
+    --series-5: #e87ba4;
+    --series-6: #008300;
+    --series-7: #4a3aa7;
+    --series-8: #e34948;
+}
+
+/* Set for two frames while the theme changes (see lib/themeMode.js) so colors swap instantly. */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-card-lift {
+    animation: none;
+  }
+}
+
+body {
+  background: var(--color-zinc-950);
+  font-feature-settings: "tnum" 1, "cv11" 1;
+}
+
+/* Hide number-input spinners; amounts are typed, not stepped. */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* SweetAlert2: themed with the same variables, so it follows light / dark too. */
+.swal2-popup {
+  font-family: var(--font-sans);
+  background: var(--color-zinc-900) !important;
+  color: var(--color-zinc-200) !important;
+  border: 1px solid color-mix(in oklab, var(--color-white) 8%, transparent);
+  border-radius: 1rem;
+}
+.swal2-popup.swal2-toast {
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.35);
+}
+.swal2-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-zinc-100) !important;
+}
+.swal2-html-container {
+  font-size: 0.875rem;
+  color: var(--color-zinc-400) !important;
+}
+.swal2-input {
+  background: var(--color-zinc-950) !important;
+  color: var(--color-zinc-100) !important;
+  border-color: color-mix(in oklab, var(--color-white) 12%, transparent) !important;
+}
+.swal2-styled {
+  border-radius: 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem !important;
+}
+.swal2-confirm {
+  background: var(--color-zinc-100) !important;
+  color: var(--color-zinc-900) !important;
+}
+.swal2-confirm.is-danger {
+  background: #e11d48 !important;
+  color: #fff !important;
+}
+.swal2-cancel {
+  background: var(--color-zinc-800) !important;
+  color: var(--color-zinc-200) !important;
+}

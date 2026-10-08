@@ -1,0 +1,44 @@
+{
+  "name": "celengin",
+  "productName": "Celengin",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm:server\" \"npm:client\"",
+    "server": "node --watch server.js",
+    "client": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "app": "vite build && node electron/launch.cjs",
+    "app:icon": "node electron/make-icon.cjs",
+    "app:shortcut": "node electron/make-shortcut.cjs"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@headlessui/react": "^2.2.10",
+    "better-sqlite3": "^13.0.3",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "imapflow": "^2.0.6",
+    "lucide-react": "^1.48.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sweetalert2": "^11.26.25"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "concurrently": "^10.0.5",
+    "electron": "^44.4.5",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.1"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true,
+    "electron@44.4.5": true
+  },
+  "main": "electron/main.js"
+}

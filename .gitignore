@@ -1,0 +1,10 @@
+node_modules
+dist
+finance.db
+finance.db-*
+.env
+electron/shortcut-*.ico
+*.db
+*.db-*
+backups/
+AI-PROMPT-SPEC.md
