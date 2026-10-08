@@ -71,6 +71,30 @@ SYNC_START_DATE=2026-10-01
 
 Gunakan App Password Gmail dan ubah `SYNC_START_DATE` sesuai tanggal mulai pencatatan. Restart aplikasi setelah konfigurasi diubah, lalu gunakan tombol sinkronisasi Gmail di dashboard. Periksa hasilnya melalui log sinkronisasi; aplikasi hanya memproses format notifikasi yang dikenali.
 
+## Email yang dibaca pada versi 1.0.0
+
+Sinkronisasi menggunakan Gmail yang dikonfigurasi pengguna. Dukungan saat ini mengikuti format notifikasi berikut; belum mencakup semua bank atau semua email transaksi.
+
+| Pengirim/layanan | Format yang dikenali |
+| --- | --- |
+| Jago | Notifikasi dari `noreply@jago.com`: uang masuk, pembayaran/transfer keluar, perpindahan kantong, tarik tunai, serta refund, cashback, atau bunga dengan nominal dan pola yang dikenali |
+| BCA | Email **Internet Transaction Journal / Jurnal Transaksi** myBCA: pembayaran dan transfer keluar. Transfer ke rekening sendiri dikenali jika nama pemilik dan penerima sesuai. Belum mendukung notifikasi uang masuk BCA secara umum |
+| Pintu | Email dari `support@pintu.co.id` tentang deposit atau penarikan Rupiah. Dicatat sebagai perpindahan dana antar dompet, bukan pembelian/penjualan crypto |
+| GoPay | Email dengan pola **Riwayat Tagihan GoPay / Tagihan GoPay**, sebagai pengeluaran |
+| Steam | Email pembelian/pembayaran dengan pola Steam yang dikenali dan nominal Rupiah |
+| Itemku | Email pembelian dengan pola Itemku yang dikenali dan nominal Rupiah |
+
+Batasan versi ini:
+
+- Memeriksa **Inbox dan Spam**, masing-masing maksimal **50 email terbaru yang cocok dengan filter pencarian**. Folder lain dan kandidat yang lebih lama belum diproses.
+- Hanya memproses email sejak `SYNC_START_DATE`; jika tidak diatur, tanggal mulainya `2026-10-01`.
+- Parser umum mencari nominal `Rp` atau `IDR`, dengan minimum Rp1.000. Tidak mengonversi mata uang asing otomatis.
+- Email promosi/newsletter dan format yang tidak dikenali dilewati. Filter promosi juga bisa melewatkan notifikasi transaksi jika isinya memuat kata atau header yang dianggap newsletter.
+- Email yang sudah tercatat tidak diproses ulang. Ada pemeriksaan salinan forward dan penggabungan beberapa pasangan email transfer, tetapi hasil tetap perlu diperiksa lewat log.
+- Pencocokan dompet mengikuti nama/tipe dompet. Transfer yang belum terhubung ke dompet perlu dihubungkan sebelum saldo dipindahkan.
+
+Perluasan lintas bank dan daftar pemeriksaan untuk format baru belum tersedia pada versi ini.
+
 ## Menjalankan source
 
 Stack: React, Vite, Tailwind CSS, Express, SQLite (`better-sqlite3`), dan Electron.
