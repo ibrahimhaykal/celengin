@@ -1,73 +1,75 @@
-# Celengin
+﻿# Celengin
 
-Celengin adalah aplikasi keuangan pribadi untuk mencatat pemasukan, pengeluaran, dan transfer antar dompet. Saldo, anggaran bulanan, jadwal pembayaran, dan target tabungan bisa dipantau dari satu dashboard.
+Project buat nyatet duit kalian. Duit masuk, keluar, pindah dompet, budget, sama target nabung bisa diliat di satu tempat. Pake aja kalo mau wkwk.
 
 ## Privacy first
 
-Data keuangan disimpan di database SQLite lokal pada perangkat pengguna. Celengin tidak mengunggah database ke server milik pengembang dan tidak membutuhkan akun Celengin. Pengguna mengelola data, konfigurasi akun, serta backup sendiri.
+Data duit kalian disimpen di device sendiri, pake database SQLite. Database nggak diupload ke server gue, dan nggak perlu bikin akun Celengin. Data, konfigurasi akun, sama backup kalian pegang sendiri.
 
-Dashboard menggunakan server lokal di perangkat, tanpa server pusat untuk menyimpan data keuangan. Pencatatan manual dapat digunakan tanpa koneksi internet.
+Dashboard jalan lewat server lokal di device kalian, tanpa server pusat buat nyimpen data keuangan. Buat nyatet manual, nggak perlu internet.
 
-Sinkronisasi Gmail dan pembaruan harga aset menghubungi layanan eksternal saat digunakan: Gmail, CoinGecko, Indodax, dan Pasardana. Email diproses di perangkat pengguna; permintaan harga aset tidak mengirim saldo atau jumlah kepemilikan. Konfigurasi Gmail disimpan dalam file `.env` lokal, sehingga file ini dan backup database perlu disimpan secara pribadi.
+Kalo pake sync Gmail atau harga aset, apps bakal hubungin Gmail, CoinGecko, Indodax, atau Pasardana sesuai fitur yang dipake. Email diproses di device kalian. Request harga aset nggak ngirim saldo atau jumlah aset yang kalian punya. Konfigurasi Gmail ada di `.env` lokal, jadi file itu sama backup database simpen buat sendiri aja.
 
-## Fitur
+## Bisa ngapain aja?
 
-- Dompet dengan saldo yang bisa dikelola sendiri.
-- Catatan transaksi dan rekap bulanan.
-- Rencana pemasukan, pengeluaran, dan anggaran per kategori.
-- Jadwal transaksi rutin dan target tabungan.
-- Sinkronisasi notifikasi transaksi Gmail yang didukung parser aplikasi.
-- Dompet aset dengan pembaruan harga, tema terang/gelap, dan opsi menyembunyikan saldo.
-- Backup database harian otomatis, dengan 14 snapshot terbaru disimpan.
+- Bikin dompet dan atur saldo.
+- Nyatet duit masuk, keluar, sama transfer antar dompet.
+- Liat rekap transaksi bulanan.
+- Atur rencana pemasukan, pengeluaran, sama budget per kategori.
+- Bikin jadwal transaksi rutin dan target nabung.
+- Baca beberapa format notif transaksi dari Gmail. Daftarnya ada di bawah.
+- Ngitung nilai crypto dan reksa dana dari harga/NAB terbaru yang berhasil diambil.
+- Ganti tema terang/gelap atau umpetin saldo.
+- Backup database otomatis tiap hari, nyimpen 14 backup terbaru.
 
-## Aset yang didukung
+## Aset apa aja?
 
-| Jenis | Pilihan | Cara menghitung saldo |
+| Jenis | Yang tersedia | Ngitung saldonya |
 | --- | --- | --- |
-| Dompet manual | Uang tunai, rekening bank, e-wallet, deposito, atau aset lain yang dicatat sendiri | Saldo Rupiah diisi pengguna dan berubah mengikuti transaksi |
-| Crypto | Bitcoin (BTC), Ethereum (ETH), Solana (SOL), BNB (BNB), XRP (XRP), Dogecoin (DOGE), Tether (USDT) | Jumlah koin × harga dalam Rupiah |
-| Reksa dana | Pasar Uang (RDPU), Pendapatan Tetap, Saham, Campuran, dan Terproteksi | Jumlah unit × NAB per unit dari produk yang dipilih |
+| Dompet manual | Cash, rekening bank, e-wallet, deposito, atau aset lain yang kalian catet sendiri | Isi saldo Rupiah, nanti berubah ngikutin transaksi |
+| Crypto | Bitcoin (BTC), Ethereum (ETH), Solana (SOL), BNB (BNB), XRP (XRP), Dogecoin (DOGE), Tether (USDT) | Jumlah koin × harga Rupiah |
+| Reksa dana | Pasar Uang (RDPU), Pendapatan Tetap, Saham, Campuran, dan Terproteksi | Jumlah unit × NAB per unit produk yang dipilih |
 
-Harga crypto diambil dari CoinGecko, dengan Indodax sebagai sumber cadangan. Aplikasi mencoba memperbarui harga setiap 5 menit. Perubahan harga 24 jam ditampilkan bila tersedia dari sumber data.
+Harga crypto dari CoinGecko. Kalo gagal, apps coba ambil dari Indodax. Dicek tiap 5 menit; perubahan harga 24 jam ditampilin kalo datanya tersedia.
 
-Produk reksa dana dicari berdasarkan nama melalui data Pasardana. Daftarnya mengikuti produk yang dikembalikan sumber tersebut dan memiliki NAB positif; nama produk tidak ditanam sebagai daftar tetap di aplikasi. Informasi produk mencakup manajer investasi, jenis, status syariah, NAB, dan tanggal NAB. Aplikasi mengecek pembaruan setiap 5 menit, tetapi NAB mengikuti tanggal data dari Pasardana, bukan harga pasar setiap saat.
+Reksa dana dicari lewat nama produk di data Pasardana. Jadi produknya ngikutin hasil dari Pasardana yang punya NAB positif, bukan daftar nama yang gue masukin satu-satu. Info produknya mencakup manajer investasi, jenis, status syariah, NAB, sama tanggal NAB. Apps ngecek tiap 5 menit, tapi NAB tetap ngikutin tanggal data Pasardana, bukan berubah tiap menit.
 
-Untuk mengaktifkan perhitungan harga pada dompet, buka **Atur harga live**, pilih **Crypto** atau **Reksa dana**, pilih aset/produk, lalu masukkan jumlah koin/unit atau nilai Rupiah. Nilai Rupiah dikonversi menjadi jumlah unit memakai harga saat pengaturan disimpan; pembaruan berikutnya mengikuti jumlah unit tersebut.
+Cara pakenya: buka **Atur harga live** di dompet, pilih **Crypto** atau **Reksa dana**, pilih asetnya, terus isi jumlah koin/unit atau nilai Rupiah. Kalo isi Rupiah, nilainya dikonversi jadi unit pake harga pas disimpen. Setelah itu saldo ngikutin jumlah unit tadi.
 
-Jika koneksi atau sumber harga gagal, saldo mempertahankan nilai terakhir. Saham individual, ETF, emas, dan kurs valuta asing belum memiliki sumber harga otomatis; nilainya bisa dicatat lewat dompet manual. Celengin mencatat kepemilikan dan nilainya, tanpa menjalankan pembelian atau penjualan aset.
+Kalo internet atau sumber harga gagal, saldo pake nilai terakhir yang berhasil diambil. Saham individual, ETF, emas, sama kurs valas belum punya harga otomatis; masih bisa dicatet manual. Apps ini buat nyatet aset dan nilainya, bukan buat beli/jual aset.
 
 ## Install di Windows
 
-Unduh `Celengin-Setup-1.0.0-x64.exe` dari [Releases](https://github.com/ibrahimhaykal/celengin/releases), jika sudah tersedia. Jalankan installer, lalu buka Celengin dari shortcut. Versi installer tidak memerlukan Node.js.
+Download `Celengin-Setup-1.0.0-x64.exe` dari [Releases](https://github.com/ibrahimhaykal/celengin/releases), jalanin installer, terus buka dari shortcut. Nggak perlu install Node.js buat versi ini.
 
-Instalasi baru dimulai kosong, tanpa contoh saldo atau data pribadi.
+Pas pertama dibuka, datanya kosong. Isi pake data kalian sendiri.
 
-## Cara pakai
+## Mulai pakenya gimana?
 
-1. Tambahkan dompet dan isi saldo awal.
-2. Atur rencana pemasukan dan pengeluaran serta budget kategori.
-3. Catat pemasukan, pengeluaran, atau transfer dengan memilih dompet terkait.
-4. Tambahkan jadwal rutin dan target tabungan bila diperlukan.
-5. Pantau saldo, sisa budget, dan rekap bulanan dari dashboard.
+1. Tambah dompet, isi saldo awal.
+2. Atur rencana pemasukan, pengeluaran, sama budget kategori.
+3. Catet transaksi dan pilih dompet yang dipake.
+4. Tambah jadwal rutin atau target nabung kalo perlu.
+5. Liat saldo, sisa budget, sama rekap bulanan dari dashboard.
 
-Menutup jendela menyembunyikan aplikasi ke system tray. Untuk menghentikan aplikasi, pilih **Keluar** dari menu tray. Menu tray juga menyediakan pilihan untuk membuka aplikasi otomatis saat Windows menyala.
+Tutup jendela cuma bikin apps masuk ke tray, masih jalan di background. Kalo mau berhenti total, pilih **Keluar** dari menu tray. Di situ juga ada opsi buat buka apps otomatis pas Windows nyala.
 
-## Data dan backup
+## Data, backup, sama pindah device
 
-Pada versi installer, pilih **Buka folder data** dari menu tray untuk menemukan database `finance.db`, konfigurasi `.env`, dan folder `backups`. Pada versi source, data disimpan di folder proyek secara default.
+Pake installer? Pilih **Buka folder data** di menu tray buat nemuin `finance.db`, `.env`, sama folder `backups`. Kalo jalanin dari source, default-nya data ada di folder project.
 
-Untuk memindahkan data ke perangkat lain:
+Buat pindah device:
 
-1. Hentikan aplikasi dan server di perangkat asal.
-2. Salin `finance.db`, `.env` jika digunakan, serta `finance.db-wal` dan `finance.db-shm` jika masih ada.
-3. Install dan buka aplikasi di perangkat tujuan untuk membuat folder data, lalu pilih **Buka folder data** dan **Keluar**.
-4. Letakkan file yang disalin di folder data tujuan sebelum membuka aplikasi kembali. Simpan salinan database tujuan terlebih dahulu jika sudah berisi data.
+1. Keluar dari apps dan stop server di device lama.
+2. Copy `finance.db`, `.env` kalo dipake, sama `finance.db-wal` dan `finance.db-shm` kalo masih ada.
+3. Install dan buka apps di device baru, pilih **Buka folder data**, terus **Keluar**.
+4. Taruh file tadi di folder data tujuan sebelum buka apps lagi. Kalo device tujuan udah punya data, backup dulu sebelum ditimpa.
 
-File ini berisi data pribadi. Simpan backup secara pribadi dan jangan unggah ke repository atau release. Folder data versi installer tidak dihapus saat uninstall.
+Database sama `.env` isinya pribadi, jangan masukin repo atau file release. Folder data versi installer tetap ada setelah uninstall.
 
-## Sinkronisasi Gmail (opsional)
+## Mau sync Gmail?
 
-Buat `.env` di folder data aplikasi:
+Ini opsional. Bikin `.env` di folder data apps:
 
 ```env
 GMAIL_USER=email@gmail.com
@@ -75,37 +77,37 @@ GMAIL_APP_PASS=app_password_gmail
 SYNC_START_DATE=2026-10-01
 ```
 
-Gunakan App Password Gmail dan ubah `SYNC_START_DATE` sesuai tanggal mulai pencatatan. Restart aplikasi setelah konfigurasi diubah, lalu gunakan tombol sinkronisasi Gmail di dashboard. Periksa hasilnya melalui log sinkronisasi; aplikasi hanya memproses format notifikasi yang dikenali.
+Pake App Password Gmail, terus ganti `SYNC_START_DATE` sesuai tanggal mulai catetan kalian. Restart apps setelah ngubah konfigurasi, lalu pake tombol sync Gmail di dashboard. Cek hasilnya lewat log, karena format email yang bisa dibaca masih terbatas.
 
-## Email yang dibaca pada versi 1.0.0
+## Email yang kebaca di v1.0.0
 
-Sinkronisasi menggunakan Gmail yang dikonfigurasi pengguna. Dukungan saat ini mengikuti format notifikasi berikut; belum mencakup semua bank atau semua email transaksi.
+Sync pake Gmail kalian. Belum semua bank atau semua notif transaksi bisa kebaca; sekarang yang dikenali ini:
 
-| Pengirim/layanan | Format yang dikenali |
+| Layanan | Email yang dikenali |
 | --- | --- |
-| Jago | Notifikasi dari `noreply@jago.com`: uang masuk, pembayaran/transfer keluar, perpindahan kantong, tarik tunai, serta refund, cashback, atau bunga dengan nominal dan pola yang dikenali |
-| BCA | Email **Internet Transaction Journal / Jurnal Transaksi** myBCA: pembayaran dan transfer keluar. Transfer ke rekening sendiri dikenali jika nama pemilik dan penerima sesuai. Belum mendukung notifikasi uang masuk BCA secara umum |
-| Pintu | Email dari `support@pintu.co.id` tentang deposit atau penarikan Rupiah. Dicatat sebagai perpindahan dana antar dompet, bukan pembelian/penjualan crypto |
-| GoPay | Email dengan pola **Riwayat Tagihan GoPay / Tagihan GoPay**, sebagai pengeluaran |
+| Jago | Dari `noreply@jago.com`: duit masuk, pembayaran/transfer keluar, pindah kantong, tarik tunai, refund, cashback, atau bunga yang nominal dan formatnya dikenali |
+| BCA | **Internet Transaction Journal / Jurnal Transaksi** myBCA buat pembayaran dan transfer keluar. Transfer ke rekening sendiri bisa dikenali kalo nama pemilik dan penerimanya cocok. Notif uang masuk BCA secara umum belum didukung |
+| Pintu | Deposit dan penarikan Rupiah dari `support@pintu.co.id`. Dicatet sebagai pindah dana antar dompet, bukan beli/jual crypto |
+| GoPay | Pola **Riwayat Tagihan GoPay / Tagihan GoPay**, dicatet sebagai pengeluaran |
 | Steam | Email pembelian/pembayaran dengan pola Steam yang dikenali dan nominal Rupiah |
 | Itemku | Email pembelian dengan pola Itemku yang dikenali dan nominal Rupiah |
 
-Batasan versi ini:
+Batasannya sekarang:
 
-- Memeriksa **Inbox dan Spam**, masing-masing maksimal **50 email terbaru yang cocok dengan filter pencarian**. Folder lain dan kandidat yang lebih lama belum diproses.
-- Hanya memproses email sejak `SYNC_START_DATE`; jika tidak diatur, tanggal mulainya `2026-10-01`.
-- Parser umum mencari nominal `Rp` atau `IDR`, dengan minimum Rp1.000. Tidak mengonversi mata uang asing otomatis.
-- Email promosi/newsletter dan format yang tidak dikenali dilewati. Filter promosi juga bisa melewatkan notifikasi transaksi jika isinya memuat kata atau header yang dianggap newsletter.
-- Email yang sudah tercatat tidak diproses ulang. Ada pemeriksaan salinan forward dan penggabungan beberapa pasangan email transfer, tetapi hasil tetap perlu diperiksa lewat log.
-- Pencocokan dompet mengikuti nama/tipe dompet. Transfer yang belum terhubung ke dompet perlu dihubungkan sebelum saldo dipindahkan.
+- Cek **Inbox sama Spam**, maksimal **50 email terbaru per folder yang cocok sama filter pencarian**. Folder lain dan kandidat yang lebih lama belum diproses.
+- Mulai dari `SYNC_START_DATE`. Kalo nggak diisi, default-nya `2026-10-01`.
+- Parser umum nyari nominal `Rp` atau `IDR`, minimal Rp1.000. Belum konversi mata uang asing otomatis.
+- Promo/newsletter dan format yang nggak dikenali dilewatin. Notif transaksi juga bisa kelewat kalo ada kata atau header yang kebaca sebagai newsletter.
+- Email yang udah dicatet nggak diproses ulang. Ada pengecekan salinan forward sama penggabungan beberapa pasangan email transfer, tapi tetep cek hasilnya di log.
+- Dompet dicocokin dari nama/tipe. Transfer yang belum nyambung ke dompet perlu kalian hubungin dulu sebelum saldonya dipindah.
 
-Perluasan lintas bank dan daftar pemeriksaan untuk format baru belum tersedia pada versi ini.
+Dukungan lintas bank yang lebih luas sama daftar buat ngecek format baru belum ada di versi ini. Itu buat next update.
 
-## Menjalankan source
+## Buat yang mau jalanin source
 
-Stack: React, Vite, Tailwind CSS, Express, SQLite (`better-sqlite3`), dan Electron.
+Pake React, Vite, Tailwind CSS, Express, SQLite (`better-sqlite3`), sama Electron.
 
-Gunakan Node.js 22.12+ atau 24+.
+Install Node.js 22.12+ atau 24+, lalu:
 
 ```sh
 git clone https://github.com/ibrahimhaykal/celengin.git
@@ -114,29 +116,29 @@ npm ci
 npm run app
 ```
 
-Untuk development lewat browser:
+Kalo mau development lewat browser:
 
 ```sh
 npm run dev
 ```
 
-Buka alamat Vite yang muncul di terminal. API berjalan di loopback pada port 5000; aplikasi desktop menggunakan port 5123.
+Buka alamat Vite yang muncul di terminal. API jalan lokal di port 5000, versi desktop pake port 5123.
 
-## Build installer
+## Build installer sendiri
 
-Jalankan di Windows untuk membuat installer 64-bit:
+Jalanin di Windows buat bikin installer 64-bit:
 
 ```sh
 npm ci
 npm run release:win
 ```
 
-Hasil build ada di `release/Celengin-Setup-1.0.0-x64.exe`. Database, backup, dan `.env` tidak disertakan dalam installer.
+Hasilnya di `release/Celengin-Setup-1.0.0-x64.exe`. Database, backup, sama `.env` nggak ikut di installer.
 
-Struktur utama:
+File utamanya:
 
 - `src/`: dashboard React.
-- `server.js`: API dan skema database.
-- `electron/`: jendela desktop, tray, dan aset ikon.
+- `server.js`: API sama skema database.
+- `electron/`: jendela desktop, tray, sama ikon.
 
-Commit source dan `package-lock.json`. `.gitignore` mengecualikan dependency, hasil build, database, backup, serta konfigurasi pribadi.
+Commit source sama `package-lock.json`. Dependency, hasil build, database, backup, dan konfigurasi pribadi udah dikecualikan lewat `.gitignore`.
